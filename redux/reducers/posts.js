@@ -1,47 +1,58 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { fetchPosts } from '../api/posts';
 
 export const fetchPostsAsync = createAsyncThunk(
-  'posts/fetchPosts',
-  async (params) => {
-    return fetchPosts(params.limit, params.offset);
+  'posts/fetchPostsAsync',
+  async (options) => {
+    const { limit, offset } = options;
+    return fetchPosts(limit, offset);
+  }
+);
+
+export const loadMorePosts = createAsyncThunk(
+  'posts/loadMorePosts',
+  async (next) => {
+    const response = await axios.get(next);
+    return response.data;
   }
 );
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState: {
-    posts: [],
-    loading: false,
+    status: 'idle',
     error: null,
-    offset: 0
+    posts: [],
+    next: null,
   },
-  reducers: {
-    setOffset: (state, action) => {
-      state.offset = action.payload;
-    }
-  },
+  reducers: {},
   extraReducers: {
-    [fetchPostsAsync.pending]: (state) => {
-        state.loading = true;
+      [fetchPostsAsync.pending]: (state) => {
+        state.status = 'loading';
       },
       [fetchPostsAsync.fulfilled]: (state, action) => {
-        state.loading = false;
-        state.posts = [...state.posts, ...action.payload.results];
-        state.offset = state.offset + 10;
+        state.status = 'succeeded';
+        state.posts = action.payload.results;
+        state.next = action.payload.next;
       },
       [fetchPostsAsync.rejected]: (state, action) => {
-        state.loading = false;
+        state.status = 'failed';
         state.error = action.error.message;
       },
+      [loadMorePosts.pending]: (state) => {
+        state.status = 'loading';
+      },
+      [loadMorePosts.fulfilled]: (state, action) => {
+        state.status = 'succeeded';
+        state.posts = [...state.posts, ...action.payload.results];
+        state.next = action.payload.next;
+      },
+      [loadMorePosts.rejected]: (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      }
   },
 });
-
-export const { setOffset } = postsSlice.actions;
-
-export const selectPosts = (state) => state.posts.posts;
-export const selectLoading = (state) => state.posts.loading;
-export const selectError = (state) => state.posts.error;
-export const selectOffset = (state) => state.posts.offset;
 
 export default postsSlice.reducer;
