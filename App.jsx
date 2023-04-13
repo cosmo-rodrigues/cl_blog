@@ -1,24 +1,16 @@
-import React from 'react';
-import { ButtonGroup, Center, Container, Flex } from '@chakra-ui/react';
-import { CustomButton } from './components/Button';
+import './App.css';
+import { Route, Routes } from 'react-router-dom'
+import Login from './Pages/Login';
+import Home from './Pages/Home';
+import { Container } from './globalStyles';
 
 function App() {
   return (
-    <Container
-      bg='#FFFFFF'
-      h='100vh'
-      backgroundImage="url('./assets/codeleap_logo_black.png')"
-      backgroundRepeat='no-repeat'
-      backgroundPosition='center'
-    >
-      <Flex>
-        <Center>
-          <ButtonGroup>
-            <CustomButton onClick={() => {}} bg='#FFFFFF' title='Login' />
-            <CustomButton onClick={() => {}} bg='#7695EC' title='Sing up' />
-          </ButtonGroup>
-        </Center>
-      </Flex>
+    <Container>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </Container>
   );
 }
