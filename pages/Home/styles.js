@@ -1,11 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-
   background: ${({ theme }) => theme.COLORS.WHITE};
+  margin: 20vh auto;
+  min-width: 55%;
   position: relative;
+
+  @media (max-width: 1023px) {
+    margin: 30vh 0;
+    width: 100%;
+  }
 `;
 
 export const Content = styled.div`

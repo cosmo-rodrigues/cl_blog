@@ -1,37 +1,24 @@
 import styled from 'styled-components';
 
 export const AnchorStyle = {
-  color: "white",
-  textDecoration: "none",
-  margin: "10px",
-  fontSize: "25px",
-}
+  color: 'white',
+  textDecoration: 'none',
+  margin: '10px',
+  fontSize: '25px',
+};
 
 export const Container = styled.div`
-  .c-green {
-    background: ${({ theme }) => theme.COLORS.GREEN};
-  }
-  .c-red {
-    background: ${({ theme }) => theme.COLORS.RED};
-  }
-  .c-blue {
-    background: ${({ theme }) => theme.COLORS.BLUE};
-  }
-  .c-white {
-    background: ${({ theme }) => theme.COLORS.WHITE};
-    color: ${({ theme }) => theme.COLORS.BLACK};
-  }
-  .c-white-btn {
-    background: ${({ theme }) => theme.COLORS.WHITE};
-    color: ${({ theme }) => theme.COLORS.BLACK};
-    border: 1px solid ${({ theme }) => theme.COLORS.GRAY_MD};
-  }
-  .d-flex {
-    display: flex;
-  }
-  .d-none {
-    display: none;
-  }
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const Title = styled.h1`
@@ -109,14 +96,23 @@ export const RowRight = styled.div`
   gap: 16px;
 `;
 
+export const Header = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+`;
+
 export const Navbar = styled.nav`
-  margin-bottom: 10px;
-  width: 100%;
-  height: 80px;
+  align-items: center;
   background-color: ${({ theme }) => theme.COLORS.BLUE};
+  color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: white;
+  height: 80px;
   text-decoration: none;
+  width: 100%;
 `;

@@ -8,6 +8,7 @@ import { fetchPosts } from '../../redux/reducers/posts';
 import AddEditPost from '../../components/AddEditPost';
 import Post from '../../components/Post';
 import { Container, Header, Content } from './styles';
+import SearchBar from '../../components/Search';
 
 export default function Home() {
   const { status, error, posts, next } = useSelector((state) => state.posts);
@@ -28,33 +29,37 @@ export default function Home() {
   const [updateTitle, setUpdateTitle] = useState('');
   const [updateDescription, setUpdateDescription] = useState('');
 
+
   return (
-    <Container>
+    <>
       <Helmet>
         <title>CodeLeap - Home</title>
       </Helmet>
-      <Header>
-        <p>CodeLeap Network</p>
-      </Header>
+      <SearchBar />
+      <Container>
+        <Header>
+          <p>CodeLeap Network</p>
+        </Header>
 
-      <Content>
-        <AddEditPost />
+        <Content>
+          <AddEditPost />
 
-        {posts.length > 0
-          ? posts.map((post) => (
-              <div key={`${post.id}_${post.created_datetime}`}>
-                <Post
-                  title={post.title}
-                  description={post.content}
-                  // iconDel={}
-                  // iconEdit={}
-                />
-              </div>
-            ))
-          : 'nothing here'}
+          {posts.length > 0
+            ? posts.map((post) => (
+                <div key={`${post.id}_${post.created_datetime}`}>
+                  <Post
+                    title={post.title}
+                    description={post.content}
+                    // iconDel={}
+                    // iconEdit={}
+                  />
+                </div>
+              ))
+            : 'nothing here'}
 
-        {isFetching && <p>Loading more posts...</p>}
-      </Content>
-    </Container>
+          {isFetching && <p>Loading more posts...</p>}
+        </Content>
+      </Container>
+    </>
   );
 }
