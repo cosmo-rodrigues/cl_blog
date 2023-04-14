@@ -1,46 +1,35 @@
-import { post } from './api';
-import { ROLES } from './constants';
-
-const storageNames = [
-  { name: '@cl_blog/user', keyData: 'user', isJson: true },
-  { name: '@cl_blog/token', keyData: 'token', isJson: false },
-];
-
 const getUserAuthentication = () =>
   JSON.parse(localStorage.getItem('@cl_blog/user'));
 
-const isAdmin = () => checkCurrentUserRole('admin');
-const isUser = () => checkCurrentUserRole('user');
+const login = (user) => {
+  const email = user.email;
+  const password = user.password;
 
-const checkCurrentUserRole = (sourceName) =>
-  getUserAuthentication()?.role === sourceName;
+  const loggedUser = JSON.parse(localStorage.getItem('@cl_blog/user'));
 
-const signIn = (user) =>
-  post({ type: 'user', service: '/login', data: user });
+  if (loggedUser.email === email && loggedUser.password === password) {
+    return { message: 'Login successful!' };
+  } else {
+    return { message: 'Please try again.' };
+  }
+};
 
-const signOut = () =>
-  storageNames.forEach((item) => localStorage.removeItem(item.name));
+const logOut = () => {
+  localStorage.removeItem('@cl_blog/user');
+
+  return { message: 'Logout successful!' };
+};
+
+const singUp = (user) => {
+  localStorage.setItem('@cl_blog/user', JSON.stringify(user));
+  return { message: 'Sing up successful!' };
+}
 
 const isLogged = () => (getUserAuthentication() ? true : false);
 
-const getToken = () => localStorage.getItem('@cl_blog/token');
-
-const removeToken = () => localStorage.removeItem('@cl_blog/token');
-
-const isValidRoles = (currentUser = {}) => {
-  ROLES.some((routeRole) =>
-    currentUser.role === routeRole ? true : false
-  );
-};
-
 export const loginService = {
-  getUserAuthentication,
-  getToken,
-  isAdmin,
+  login,
+  logOut,
+  singUp,
   isLogged,
-  isValidRoles,
-  isUser,
-  removeToken,
-  signIn,
-  signOut,
 };

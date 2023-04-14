@@ -1,22 +1,15 @@
 import axios from 'axios';
-import { loginService } from './login';
 
 export const api = (type = 'user') => {
   const paths = {
-    user: process.env.REACT_APP_BASE_URL_API,
+    user: import.meta.env.VITE_APP_BASE_URL_API,
   };
 
+
   const API = axios.create({
-    baseURL: paths[type],
-    withCredentials: true,
-    headers: {
-      'Access-Control-Allow-Headers':
-        'Origin, X-Requested-With, Content-Type, Accept',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': true,
-    },
+    baseURL: paths[type]
   });
+
 
   API.interceptors.response.use(undefined, (err) => {
     const {
@@ -30,41 +23,29 @@ export const api = (type = 'user') => {
     });
   });
 
-  API.interceptors.request.use(
-    (config) => {
-      if (config.url.indexOf('users/login') !== -1) return config;
-
-      const token = loginService.getToken();
-      if (token) config.headers['Authorization'] = token.replaceAll('"', '');
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
   return API;
 };
 
 export const get = async (config) => {
   const { type, service, queryString } = config;
   if (queryString) {
-    return await api(type).get(`${service}/${queryString}`);
+    return api(type).get(`${service}?${queryString}`).then(response => response.data);
   }
-  return await api(type).get(`${service}`);
+
+  return api(type).get(`${service}`).then(response => response.data);
 };
 
-export const put = async (config) => {
+export const put = (config) => {
   const { type, service, data } = config;
-  return await api(type).put(service, data);
+  return api(type).put(service, data).then(response => response.data);
 };
 
-export const post = async (config) => {
+export const post = (config) => {
   const { type, service, data } = config;
-  return await api(type).post(service, data);
+  return api(type).post(service, data).then(response => response.data);
 };
 
-export const remove = async (config) => {
+export const remove = (config) => {
   const { type, service } = config;
-  return await api(type).delete(service);
+  return api(type).delete(service);
 };

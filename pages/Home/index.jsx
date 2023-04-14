@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { fetchPosts, fetchMorePosts } from '../../redux/reducers/posts';
+import { fetchPosts } from '../../redux/reducers/posts';
 
 import AddEditPost from '../../components/AddEditPost';
 import Post from '../../components/Post';
@@ -14,16 +14,16 @@ export default function Home() {
 
   const handleLoadMore = async () => {
     if (next) {
-      dispatch(fetchMorePosts(next));
+      dispatch(fetchPosts({ next }));
     }
-    setIsFetching(false);
   };
 
-  const [isFetching, setIsFetching] = useInfiniteScroll(handleLoadMore);
+  const [isFetching] = useInfiniteScroll(handleLoadMore);
 
   useEffect(() => {
-    dispatch(fetchPosts({ limit: 10, offset: 0 }));
+    if (!isFetching) dispatch(fetchPosts({ limit: 10, offset: 0 }));
   }, [dispatch]);
+
 
   const [updateTitle, setUpdateTitle] = useState('');
   const [updateDescription, setUpdateDescription] = useState('');

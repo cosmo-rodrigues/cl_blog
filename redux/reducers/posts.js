@@ -1,20 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import * as postsApi from '../api/posts';
+import { postService } from '../../services/posts';
 
 export const fetchPosts = createAsyncThunk(
-  'posts/fetchPostsAsync',
+  'posts/fetchPosts',
   async (options) => {
+    if(options.next) {
+      const NEXT_QUERY = options.next.split('?')[1];
+      return postService.getAll(NEXT_QUERY);
+    }
     const { limit, offset } = options;
-    return postsApi.fetchPosts(limit, offset);
+    return postService.getAll(`limit=${limit}&offset=${offset}`);
   }
 );
 
-export const fetchMorePosts = createAsyncThunk(
-  'posts/loadMorePosts',
-  async (next) => {
-    return postsApi.fetchMorePosts(next)
-  }
-);
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -31,22 +29,10 @@ export const postsSlice = createSlice({
       },
       [fetchPosts.fulfilled]: (state, action) => {
         state.status = 'succeeded';
-        state.posts = action.payload.results;
-        state.next = action.payload.next;
-      },
-      [fetchPosts.rejected]: (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      },
-      [fetchMorePosts.pending]: (state) => {
-        state.status = 'loading';
-      },
-      [fetchMorePosts.fulfilled]: (state, action) => {
-        state.status = 'succeeded';
         state.posts = [...state.posts, ...action.payload.results];
         state.next = action.payload.next;
       },
-      [fetchMorePosts.rejected]: (state, action) => {
+      [fetchPosts.rejected]: (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       }
