@@ -1,4 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+
+export const AnchorStyle = {
+  color: "white",
+  textDecoration: "none",
+  margin: "10px",
+  fontSize: "25px",
+}
 
 export const Container = styled.div`
   .c-green {
@@ -35,17 +42,16 @@ export const Title = styled.h1`
   margin-bottom: 24px;
 
   color: ${({ theme }) => theme.COLORS.BLACK};
- 
 `;
 
 export const SubTitle = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: ${({ theme }) => theme.FONT_SIZE.MD};
-    line-height: 19px;
-    margin-bottom: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: ${({ theme }) => theme.FONT_SIZE.MD};
+  line-height: 19px;
+  margin-bottom: 8px;
 
-    color: ${({ theme }) => theme.COLORS.BLACK};
+  color: ${({ theme }) => theme.COLORS.BLACK};
 `;
 
 export const Text = styled.p`
@@ -53,6 +59,7 @@ export const Text = styled.p`
   font-size: ${({ theme }) => theme.FONT_SIZE.LG};
   line-height: 21px;
   color: ${({ theme }) => theme.COLORS.BLACK};
+  word-wrap: break-word;
 `;
 
 export const Input = styled.input`
@@ -68,7 +75,7 @@ export const Input = styled.input`
   font-size: ${({ theme }) => theme.FONT_SIZE.SM};
   line-height: 16px;
   text-indent: 11.2px;
-  
+
   ::placeholder {
     color: ${({ theme }) => theme.COLORS.GRAY};
   }
@@ -89,7 +96,7 @@ export const InputTextContent = styled.textarea`
   line-height: 16px;
   text-indent: 11.2px;
   resize: none;
-  
+
   ::placeholder {
     color: ${({ theme }) => theme.COLORS.GRAY};
   }
@@ -100,4 +107,16 @@ export const RowRight = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
+`;
+
+export const Navbar = styled.nav`
+  margin-bottom: 10px;
+  width: 100%;
+  height: 80px;
+  background-color: ${({ theme }) => theme.COLORS.BLUE};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
 `;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { fetchPosts } from '../../redux/reducers/posts';
@@ -24,12 +25,14 @@ export default function Home() {
     if (!isFetching) dispatch(fetchPosts({ limit: 10, offset: 0 }));
   }, [dispatch]);
 
-
   const [updateTitle, setUpdateTitle] = useState('');
   const [updateDescription, setUpdateDescription] = useState('');
 
   return (
     <Container>
+      <Helmet>
+        <title>CodeLeap - Home</title>
+      </Helmet>
       <Header>
         <p>CodeLeap Network</p>
       </Header>

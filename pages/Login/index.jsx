@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { loginService } from '../../services/login';
 
@@ -16,6 +17,9 @@ export default function Login() {
 
   return (
     <Modal>
+      <Helmet>
+        <title>CodeLeap - Login</title>
+      </Helmet>
       <Title>Welcome to CodeLeap network!</Title>
       <SubTitle>Please enter your username</SubTitle>
 
@@ -27,10 +31,7 @@ export default function Login() {
       />
 
       <RowRight>
-        <Link
-          to={userName === 'jana' ? '/' : '#'}
-          className={!userName ? 'disabled-link' : ''}
-        >
+        <Link to={`/${userName}`} className={!userName ? 'disabled-link' : ''}>
           <Button
             title='Enter'
             color={!userName || userName.length < 3 ? 'disabled' : 'blue'}
