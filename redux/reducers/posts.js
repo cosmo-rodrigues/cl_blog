@@ -1,54 +1,52 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { fetchPosts } from '../api/posts';
+import * as postsApi from '../api/posts';
 
-export const fetchPostsAsync = createAsyncThunk(
+export const fetchPosts = createAsyncThunk(
   'posts/fetchPostsAsync',
   async (options) => {
     const { limit, offset } = options;
-    return fetchPosts(limit, offset);
+    return postsApi.fetchPosts(limit, offset);
   }
 );
 
-export const loadMorePosts = createAsyncThunk(
+export const fetchMorePosts = createAsyncThunk(
   'posts/loadMorePosts',
   async (next) => {
-    const response = await axios.get(next);
-    return response.data;
+    return postsApi.fetchMorePosts(next)
   }
 );
 
 export const postsSlice = createSlice({
   name: 'posts',
   initialState: {
-    status: 'idle',
+    status: '',
     error: null,
     posts: [],
     next: null,
   },
   reducers: {},
   extraReducers: {
-      [fetchPostsAsync.pending]: (state) => {
+      [fetchPosts.pending]: (state) => {
         state.status = 'loading';
       },
-      [fetchPostsAsync.fulfilled]: (state, action) => {
+      [fetchPosts.fulfilled]: (state, action) => {
         state.status = 'succeeded';
         state.posts = action.payload.results;
         state.next = action.payload.next;
       },
-      [fetchPostsAsync.rejected]: (state, action) => {
+      [fetchPosts.rejected]: (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       },
-      [loadMorePosts.pending]: (state) => {
+      [fetchMorePosts.pending]: (state) => {
         state.status = 'loading';
       },
-      [loadMorePosts.fulfilled]: (state, action) => {
+      [fetchMorePosts.fulfilled]: (state, action) => {
         state.status = 'succeeded';
         state.posts = [...state.posts, ...action.payload.results];
         state.next = action.payload.next;
       },
-      [loadMorePosts.rejected]: (state, action) => {
+      [fetchMorePosts.rejected]: (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       }

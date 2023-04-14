@@ -1,47 +1,76 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPostsAsync, loadMorePosts } from './redux/reducers/posts';
-import useInfiniteScroll from './hooks/useInfiniteScroll';
+import React, { useState } from 'react'
+import { RowRight, Text, Title } from '../../style/globalStyles'
+import IconEdit from '../../assets/edit.svg'
+import IconDelete from '../../assets/delete.svg'
+import AddEditPost from '../AddEditPost'
+import Button from '../Button'
 
+import {
+  Container,
+  Header,
+  Content,
+  Info,
+  Icons,
+} from './styles'
+import { useDispatch, useSelector } from 'react-redux'
 
+export default function Post({
+  title,
+  info = true,
+  text,
+  userName,
+  time,
+  onClickDel,
+  description
+}) {
 
-function Post() {
+  const [modalDel, setModalDel] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpenModalDelete = () => {
+    setModalDel(!modalDel)
+    console.log(modalDel)
+  }
+
+  const handleOpenModalEdit = () => {
+    setModalEdit(!modalEdit)
+    console.log(modalEdit)
+  }
+
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+    setModalDel(false)
+    setModalEdit(false)
+    console.log(openModal)
+  }
+
+  const posts = useSelector((state) => state.posts.items)
   const dispatch = useDispatch();
-  const { status, error, posts, next } = useSelector((state) => state.posts);
-
-  const handleLoadMore = async () => {
-    if (next) {
-      dispatch(loadMorePosts(next));
-    }
-    setIsFetching(false);
-  };
-
-  const [isFetching, setIsFetching] = useInfiniteScroll(handleLoadMore);
-
-  useEffect(() => {
-    dispatch(fetchPostsAsync({limit: 10, offset: 0}));
-  }, [dispatch]);
-
   return (
-    <div>
-      {status === 'loading' && <p>Loading...</p>}
-      {status === 'failed' && <p>{error}</p>}
-      {status === 'succeeded' && (
-        <>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.id}>
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
-              </li>
-            ))}
-          </ul>
-          {isFetching && <p>Loading more posts...</p>}
-        </>
-      )}
-    </div>
-  );
+    <Container>
 
+        <Header>
+          <Title>{title}</Title>
+
+          <Icons className={info ? '' : 'display-none'}>
+            <img src={IconDelete} alt="" onClick={handleOpenModalDelete} />
+            <img src={IconEdit} alt="" onClick={handleOpenModalEdit} />
+          </Icons>
+        </Header>
+
+        <Content>
+          <Info>
+            <p>{userName}</p>
+            <p>{time}</p>
+          </Info>
+
+          <Text>
+            {description}
+          </Text>
+        </Content>
+
+    
+    </Container>
+  )
 }
-
-export default Post

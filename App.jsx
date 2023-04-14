@@ -1,8 +1,7 @@
-import './App.css';
 import { Route, Routes } from 'react-router-dom'
-import Login from './Pages/Login';
-import Home from './Pages/Home';
-import { Container } from './globalStyles';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import { Container } from './style/globalStyles';
 
 function App() {
   return (

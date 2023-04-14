@@ -1,13 +1,10 @@
-import { Button, Container } from '@chakra-ui/react';
+import React from 'react'
+import { ContentButton } from './styles'
 
-export function CustomButton(props) {
-  const { onClick, bg, title } = props;
-
+export default function Button({ title, color, onClick}) {
   return (
-    <Container>
-      <Button onClick={onClick} bg={bg} size='md' variant='solid'>
-        {title}
-      </Button>
-    </Container>
-  );
+    <ContentButton className={`c-${color}`} onClick={onClick}>
+      {title}
+    </ContentButton>
+  )
 }
