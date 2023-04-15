@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   background: ${({ theme }) => theme.COLORS.WHITE};
   margin: 20vh auto;
-  min-width: 55%;
+  width: 95%;
   position: relative;
 
   @media (max-width: 1023px) {

@@ -31,7 +31,7 @@ function App() {
       <Content>
         <Routes>
           <Route path='/' element={<Home />}>
-            <Route path=':usermame' element={() => <>Username</>} />
+            <Route path=':usermame' element={<>Username</>} />
           </Route>
           <Route path='login' element={<Login />} />
         </Routes>

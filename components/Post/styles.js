@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   background: ${({ theme }) => theme.COLORS.WHITE};
@@ -37,7 +37,7 @@ export const Container = styled.div`
     position: absolute;
     width: 100vw;
     height: 100%;
-    
+
     z-index: 1;
     left: 50%;
     top: 50%;
@@ -49,7 +49,7 @@ export const Header = styled.div`
   padding: 24px;
   border-radius: 16px 16px 0px 0px;
   background: ${({ theme }) => theme.COLORS.BLUE};
-  
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -68,7 +68,7 @@ export const Icons = styled.div`
   display: flex;
   align-items: center;
   gap: 34px;
-  
+
   img {
     transition: 0.3s;
     cursor: pointer;
@@ -84,12 +84,11 @@ export const Content = styled.div`
 `;
 
 export const Info = styled.div`
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
   margin-bottom: 16px;
+  width: 100%;
 
   p {
     font-weight: 400;

@@ -15,10 +15,11 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
+  width: 80vh;
+
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.h1`
@@ -27,6 +28,9 @@ export const Title = styled.h1`
   font-size: ${({ theme }) => theme.FONT_SIZE.XL};
   line-height: 26px;
   margin-bottom: 24px;
+  max-width: 80%;
+  word-wrap: break-word !important;
+
 
   color: ${({ theme }) => theme.COLORS.BLACK};
 `;
@@ -98,6 +102,7 @@ export const RowRight = styled.div`
 
 export const Header = styled.header`
   position: fixed;
+  height: 60px;
   top: 0;
   left: 0;
   right: 0;
@@ -112,7 +117,7 @@ export const Navbar = styled.nav`
   color: white;
   display: flex;
   justify-content: center;
-  height: 80px;
+  height: 100%;
   text-decoration: none;
   width: 100%;
 `;

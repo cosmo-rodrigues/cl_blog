@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Modal = styled.div`
   width: 500px;
@@ -25,5 +25,36 @@ export const Modal = styled.div`
 
   a .disabled {
     background: ${({ theme }) => theme.COLORS.GRAY};
-   }
+  }
 `;
+
+export const List = styled.ul`
+  align-items: center;
+  color: green;
+  display: flex;
+  list-style: none !important;
+  flex-direction: column;
+
+  li {
+    color: green;
+  }
+   
+   li::before {
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+  }
+`;
+
+// export const ListItem = styled.li`
+//   ::before {
+//     content: "\2022";
+//     color: red;
+//     font-weight: bold;
+//     display: inline-block; 
+//     width: 1em;
+//     margin-left: -1em;
+//   }
+// `

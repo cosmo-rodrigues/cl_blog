@@ -6,7 +6,7 @@ import { loginService } from '../../services/login';
 
 import { Input, RowRight, SubTitle, Title } from '../../style/globalStyles';
 import Button from '../../components/Button';
-import { Modal } from './styles';
+import { List, Modal } from './styles';
 
 export default function Login() {
   const [userName, setUserName] = useState('');
@@ -40,12 +40,13 @@ export default function Login() {
         </Link>
       </RowRight>
 
-      <p>users Online: </p>
-      <ul>
-        {loginService.getAllUsers().map((user) => (
-          <li key={user.id}>{user.username}</li>
-        ))}
-      </ul>
+      <p>users online: </p>
+      <List>
+        {loginService.getAllUsers()?.length > 0 &&
+          loginService
+            .getAllUsers()
+            .map((user) => <li key={user.id}>{user.username}</li>)}
+      </List>
     </Modal>
   );
 }

@@ -35,15 +35,19 @@ export const SearchButton = styled.button`
 
 export const Container = styled.div`
   width: 30%;
-  position: absolute;
-  top: 15vh;
-  left: 85%;
+  position: fixed;
+  top: 17vh;
+  left: 30vh;
   transform: translate(-50%, -50%);
 
   @media (max-width: 1023px) {
-    top: 20vh;
+    top: 11vh;
     left: 50%;
-    position: absolute;
-    width: 90%;
+    position: fixed;
+    width: 100%;
+  }
+
+  @media (max-width: 400px) {
+    top: 15vh;
   }
 `;

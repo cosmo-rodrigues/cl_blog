@@ -5,10 +5,13 @@ export const fetchPosts = createAsyncThunk(
   'posts/fetchPosts',
   async (options) => {
     if (options.next) {
+      console.log("Passeis NEXT")
+
       const NEXT_QUERY = options.next.split('?')[1];
       return postService.getAll(NEXT_QUERY);
     }
     const { limit, offset } = options;
+    console.log("Passeis")
     return postService.getAll(`limit=${limit}&offset=${offset}`);
   }
 );
