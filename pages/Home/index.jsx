@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
@@ -11,24 +11,20 @@ import { Container, Header, Content } from './styles';
 import SearchBar from '../../components/Search';
 
 export default function Home() {
-  const { status, error, posts, next } = useSelector((state) => state.posts);
-  const dispatch = useDispatch();
-
-  const handleLoadMore = async () => {
-    if (next) {
-      dispatch(fetchPosts({ next }));
-    }
-  };
-
+  const { posts, next } = useSelector((state) => state.posts);
   const [isFetching] = useInfiniteScroll(handleLoadMore);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isFetching) dispatch(fetchPosts({ limit: 10, offset: 0 }));
   }, [dispatch]);
 
-  const [updateTitle, setUpdateTitle] = useState('');
-  const [updateDescription, setUpdateDescription] = useState('');
-
+  async function handleLoadMore() {
+    if (next) {
+      dispatch(fetchPosts({ next }));
+    }
+  }
 
   return (
     <>
@@ -44,18 +40,11 @@ export default function Home() {
         <Content>
           <AddEditPost />
 
-          {posts.length > 0
-            ? posts.map((post) => (
-                <div key={`${post.id}_${post.created_datetime}`}>
-                  <Post
-                    title={post.title}
-                    description={post.content}
-                    // iconDel={}
-                    // iconEdit={}
-                  />
-                </div>
-              ))
-            : 'nothing here'}
+          {posts.map((post) => (
+            <div key={`${post.id}-${new Date().getMilliseconds()}`}>
+              <Post title={post.title} description={post.content} />
+            </div>
+          ))}
 
           {isFetching && <p>Loading more posts...</p>}
         </Content>
