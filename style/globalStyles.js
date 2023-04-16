@@ -8,6 +8,31 @@ export const AnchorStyle = {
 };
 
 export const Container = styled.div`
+  .c-green {
+    background: ${({ theme }) => theme.COLORS.GREEN};
+  }
+  .c-red {
+    background: ${({ theme }) => theme.COLORS.RED};
+  }
+  .c-blue {
+    background: ${({ theme }) => theme.COLORS.BLUE};
+  }
+  .c-white {
+    background: ${({ theme }) => theme.COLORS.WHITE};
+    color: ${({ theme }) => theme.COLORS.BLACK};
+  }
+  .c-white-btn {
+    background: ${({ theme }) => theme.COLORS.WHITE};
+    color: ${({ theme }) => theme.COLORS.BLACK};
+    border: 1px solid ${({ theme }) => theme.COLORS.GRAY_MD};
+  }
+  .d-flex {
+    display: flex;
+  }
+  .d-none {
+    display: none;
+  }
+
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -30,7 +55,6 @@ export const Title = styled.h1`
   margin-bottom: 24px;
   max-width: 80%;
   word-wrap: break-word !important;
-
 
   color: ${({ theme }) => theme.COLORS.BLACK};
 `;

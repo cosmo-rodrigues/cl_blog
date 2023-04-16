@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { loginService } from '../../services/login';
+import { fetchPosts } from '../../redux/reducers/posts';
 
 import { Input, RowRight, SubTitle, Title } from '../../style/globalStyles';
 import Button from '../../components/Button';
 import { List, Modal } from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 export default function Login() {
+  const { posts, next } = useSelector((state) => state.posts);
   const [userName, setUserName] = useState('');
+  const [_isFetching] = useInfiniteScroll(handleLoadMore);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPosts({ limit: 10, offset: 0 }));
+  }, []);
+
+  async function handleLoadMore() {
+    if (next) {
+      dispatch(fetchPosts({ next }));
+    }
+  }
+
+  const uniqueUsernames = [...new Set(posts.map((post) => post.username))];
 
   function Login() {
-    loginService.singUp(userName);
+    const result = loginService.login(userName);
+
+    if (result.status === 'success') {
+      navigate(`/${userName}`);
+    } else {
+      loginService.singUp(userName);
+      navigate(`/${userName}`);
+    }
   }
 
   return (
@@ -31,21 +57,18 @@ export default function Login() {
       />
 
       <RowRight>
-        <Link to={`/${userName}`} className={!userName ? 'disabled-link' : ''}>
-          <Button
-            title='Enter'
-            color={!userName || userName.length < 3 ? 'disabled' : 'blue'}
-            onClick={Login}
-          />
-        </Link>
+        <Button
+          title='Enter'
+          color={!userName || userName.length < 3 ? 'disabled' : 'blue'}
+          onClick={Login}
+        />
       </RowRight>
 
-      <p>users online: </p>
+      <p>online users: </p>
       <List>
-        {loginService.getAllUsers()?.length > 0 &&
-          loginService
-            .getAllUsers()
-            .map((user) => <li key={user.id}>{user.username}</li>)}
+        {uniqueUsernames.map((user) => (
+          <li key={user}>{user}</li>
+        ))}
       </List>
     </Modal>
   );

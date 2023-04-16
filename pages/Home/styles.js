@@ -7,7 +7,6 @@ export const Container = styled.div`
   position: relative;
 
   @media (max-width: 1023px) {
-    margin: 30vh 0;
     width: 100%;
   }
 `;

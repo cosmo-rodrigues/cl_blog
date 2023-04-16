@@ -29,32 +29,13 @@ export const Modal = styled.div`
 `;
 
 export const List = styled.ul`
-  align-items: center;
+  align-items: flex-start;
   color: green;
   display: flex;
-  list-style: none !important;
   flex-direction: column;
-
+  
   li {
-    color: green;
-  }
-   
-   li::before {
-    content: "\2022";
-    font-weight: bold;
-    display: inline-block; 
-    width: 1em;
-    margin-left: -1em;
+    max-width: 50%;
+    word-wrap: break-word;
   }
 `;
-
-// export const ListItem = styled.li`
-//   ::before {
-//     content: "\2022";
-//     color: red;
-//     font-weight: bold;
-//     display: inline-block; 
-//     width: 1em;
-//     margin-left: -1em;
-//   }
-// `

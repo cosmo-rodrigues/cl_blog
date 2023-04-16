@@ -95,6 +95,8 @@ export const Info = styled.div`
     line-height: 21px;
     font-size: ${({ theme }) => theme.FONT_SIZE.LG};
     color: ${({ theme }) => theme.COLORS.GRAY_DARK};
+    overflow: hidden;
+    max-width: 70%;
   }
   p:first-child {
     font-weight: 700;

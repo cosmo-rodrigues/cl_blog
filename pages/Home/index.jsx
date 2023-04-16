@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { fetchPosts } from '../../redux/reducers/posts';
-
+import SearchBar from '../../components/Search';
 import AddEditPost from '../../components/AddEditPost';
 import Post from '../../components/Post';
 import { Container, Header, Content } from './styles';
-import SearchBar from '../../components/Search';
 import { useURLParams } from '../../hooks/useURLParams';
 export default function Home() {
   const { posts, next } = useSelector((state) => state.posts);
@@ -17,8 +16,8 @@ export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isFetching) dispatch(fetchPosts({ limit: 10, offset: 0 }));
-  }, [dispatch]);
+    dispatch(fetchPosts({ limit: 10, offset: 0 }));
+  }, []);
 
   async function handleLoadMore() {
     if (next) {
@@ -31,10 +30,10 @@ export default function Home() {
       <Helmet>
         <title>CodeLeap - Home</title>
       </Helmet>
-      <SearchBar />
       <Container>
         <Header>
           <p>CodeLeap Network</p>
+          <SearchBar />
         </Header>
 
         <Content>
@@ -42,15 +41,15 @@ export default function Home() {
 
           {posts.length > 0 ? (
             posts.map((post) => (
-                <Post
+              <Post
                 key={post.id}
-                  content={post.content}
-                  createdDatetime={post.created_datetime}
-                  id={post.id}
-                  title={post.title}
-                  userName={post.username}
-                  owner={params === post.username}
-                />
+                content={post.content}
+                createdDatetime={post.created_datetime}
+                id={post.id}
+                title={post.title}
+                userName={post.username}
+                owner={params === post.username}
+              />
             ))
           ) : (
             <p>This user has no posts yet</p>

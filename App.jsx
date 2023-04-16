@@ -1,4 +1,4 @@
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import {
@@ -8,11 +8,20 @@ import {
   Header,
   Navbar,
 } from './style/globalStyles';
-
+import { loginService } from './services/login';
 function App() {
+  const navigate = useNavigate();
   const handleHomeLinkClick = () => {
     if (window.location.pathname === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const loggedUser = loginService.getUser();
+
+  const LogOut = () => {
+    if (loggedUser) {
+      loginService.logOut();
     }
   };
 
@@ -23,8 +32,8 @@ function App() {
           <Link to='/' style={AnchorStyle} onClick={handleHomeLinkClick}>
             Home
           </Link>
-          <Link to='login' style={AnchorStyle}>
-            Login
+          <Link to='/login' style={AnchorStyle} onClick={LogOut}>
+            {loggedUser ? 'Logout' : 'Login'}
           </Link>
         </Navbar>
       </Header>

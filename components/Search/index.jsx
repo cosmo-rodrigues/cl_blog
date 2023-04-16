@@ -32,27 +32,25 @@ function SearchBar() {
   }
 
   return (
-    <>
-      <Container>
-        <Search>
-          <SearchTerm
-            type='text'
-            value={searchTerm}
-            placeholder='Find posts by username...'
-            onChange={({ target }) => handleSearch(target.value)}
-          />
-          {toggle ? (
-            <SearchButton type='submit' onClick={handdleToggle}>
-              &#128270;
-            </SearchButton>
-          ) : (
-            <SearchButton type='submit' onClick={handdleToggle}>
-              &#10060;
-            </SearchButton>
-          )}
-        </Search>
-      </Container>
-    </>
+    <Container>
+      <Search>
+        <SearchTerm
+          type='text'
+          value={searchTerm}
+          placeholder='Find posts by username...'
+          onChange={({ target }) => handleSearch(target.value)}
+        />
+        {toggle ? (
+          <SearchButton type='submit' onClick={handdleToggle}>
+            &#128270;
+          </SearchButton>
+        ) : (
+          <SearchButton type='submit' onClick={handdleToggle}>
+            &#10060;
+          </SearchButton>
+        )}
+      </Search>
+    </Container>
   );
 }
 
