@@ -28,16 +28,24 @@ export default function Login() {
     }
   }
 
+  function removeExtraSpacesAndJoin(string) {
+    string = string.trim();
+    string = string.replace(/\s+/g, ' ');
+    string = string.replace(/\s/g, '');
+    return string;
+  }
+
   const uniqueUsernames = [...new Set(posts.map((post) => post.username))];
 
   function Login() {
-    const result = loginService.login(userName);
+    const userNameWithoutSpaces = removeExtraSpacesAndJoin(userName);
+    const result = loginService.login(userNameWithoutSpaces);
 
     if (result.status === 'success') {
-      navigate(`/${userName}`);
+      navigate(`/${userNameWithoutSpaces}`);
     } else {
-      loginService.singUp(userName);
-      navigate(`/${userName}`);
+      loginService.singUp(userNameWithoutSpaces);
+      navigate(`/${userNameWithoutSpaces}`);
     }
   }
 

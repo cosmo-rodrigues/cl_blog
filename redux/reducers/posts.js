@@ -48,7 +48,7 @@ export const postsSlice = createSlice({
     },
     [fetchPostsByUserName.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      state.posts = [...action.payload.results];
+      state.posts = action.payload.results;
       state.next = action.payload.next;
     },
     [fetchPostsByUserName.rejected]: (state, action) => {

@@ -6,13 +6,13 @@ import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { fetchPosts } from '../../redux/reducers/posts';
 import SearchBar from '../../components/Search';
 import AddEditPost from '../../components/AddEditPost';
-import Post from '../../components/Post';
+import { PostsList } from '../../components/Post';
 import { Container, Header, Content } from './styles';
 import { useURLParams } from '../../hooks/useURLParams';
 export default function Home() {
   const { posts, next } = useSelector((state) => state.posts);
   const [isFetching] = useInfiniteScroll(handleLoadMore);
-  const params = useURLParams();
+  const username = useURLParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,17 +40,7 @@ export default function Home() {
           <AddEditPost />
 
           {posts.length > 0 ? (
-            posts.map((post) => (
-              <Post
-                key={post.id}
-                content={post.content}
-                createdDatetime={post.created_datetime}
-                id={post.id}
-                title={post.title}
-                userName={post.username}
-                owner={params === post.username}
-              />
-            ))
+            <PostsList posts={posts} owner={username}/>
           ) : (
             <p>This user has no posts yet</p>
           )}
