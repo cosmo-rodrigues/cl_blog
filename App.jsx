@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import {
@@ -45,9 +45,10 @@ function App() {
       <Content>
         <Routes>
           <Route path='/' element={<Home />}>
-            <Route path=':usermame' element={<>Username</>} />
+            <Route path=':usermame' element={<></>} />
           </Route>
           <Route path='login' element={<Login />} />
+          <Route path='*' element={<Navigate replace to='/' />} />
         </Routes>
       </Content>
     </Container>
