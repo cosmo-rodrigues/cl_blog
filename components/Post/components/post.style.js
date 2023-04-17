@@ -4,45 +4,6 @@ export const Container = styled.div`
   background: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid ${({ theme }) => theme.COLORS.GRAY_MD};
   border-radius: 16px;
-
-  .open-modal {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: ${({ theme }) => theme.COLORS.WHITE};
-    z-index: 2;
-
-    width: 660px;
-    border-radius: 16px;
-    border: 1px solid ${({ theme }) => theme.COLORS.GRAY_MD};
-    padding: 24px;
-  }
-  .open-modal-edit {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: ${({ theme }) => theme.COLORS.WHITE};
-    z-index: 2;
-
-    width: 660px;
-    border-radius: 16px;
-  }
-  .close-modal {
-    display: none;
-  }
-  .cover {
-    background: rgba(119, 119, 119, 0.8);
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-
-    z-index: 1;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
 `;
 
 export const Header = styled.div`

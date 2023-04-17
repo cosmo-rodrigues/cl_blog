@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchPosts, fetchPostsByUserName } from '../../actions/posts';
 
 export const postsSlice = createSlice({
@@ -15,8 +15,11 @@ export const postsSlice = createSlice({
       state.status = 'loading';
     },
     [fetchPosts.fulfilled]: (state, action) => {
+      const shouldReset = action.payload.reset
+        ? [...action.payload.results]
+        : [...state.posts, ...action.payload.results];
       state.status = 'succeeded';
-      state.posts = [...state.posts, ...action.payload.results];
+      state.posts = shouldReset;
       state.next = action.payload.next;
     },
     [fetchPosts.rejected]: (state, action) => {

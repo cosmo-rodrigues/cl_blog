@@ -5,12 +5,12 @@ export const fetchPosts = createAsyncThunk(
   'posts/fetchPosts',
   async (options) => {
     if (options.next) {
-
       const NEXT_QUERY = options.next.split('?')[1];
       return postService.getAll(NEXT_QUERY);
     }
     const { limit, offset } = options;
-    return postService.getAll(`limit=${limit}&offset=${offset}`);
+    const payload = await postService.getAll(`limit=${limit}&offset=${offset}`);
+    return { ...payload, reset: options?.reset || false };
   }
 );
 
@@ -20,3 +20,7 @@ export const fetchPostsByUserName = createAsyncThunk(
     return postService.getAll(`username=${options.username}`);
   }
 );
+
+export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
+  return postService.deletePost(id);
+});

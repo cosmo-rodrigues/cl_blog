@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Post } from './components/post';
 import { ModalComponent } from './components/modal';
 import { loginService } from '../../services/login';
+import { DeleteNotification } from './components/delete.notification';
+import { AddEdit } from './components/add.edit';
+import { useDispatch } from 'react-redux';
+import { deletePost, fetchPosts } from '../../actions/posts';
 
 export function PostsList({ posts }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -12,31 +16,39 @@ export function PostsList({ posts }) {
     content: '',
   });
 
+  const dispatch = useDispatch();
+
   const user = loginService.isLogged();
 
-  const handleEditClick = (card) => {
+  function handleEditClick(card) {
     setSelectedCard(card);
     setEditModalOpen(true);
-  };
+  }
 
-  const handleSaveClick = () => {
+  function handleEditConfirm() {
     // Save changes to the selected card
     setEditModalOpen(false);
-  };
+  }
 
-  const handleDeleteClick = (card) => {
+  function handleEditCancel() {
+    // Save changes to the selected card
+    setEditModalOpen(false);
+  }
+
+  function handleDeleteClick(card) {
     setSelectedCard(card);
     setDeleteModalOpen(true);
-  };
+  }
 
-  const handleDeleteConfirm = () => {
-    // Delete the selected card
+  async function handleDeleteConfirm(id) {
+    dispatch(deletePost(id));
+    dispatch(fetchPosts({ limit: 10, offset: 0, reset: true }));
     setDeleteModalOpen(false);
-  };
+  }
 
-  const handleDeleteCancel = () => {
+  function handleDeleteCancel() {
     setDeleteModalOpen(false);
-  };
+  }
 
   function isOwner(username) {
     return user && user.username === username;
@@ -48,7 +60,7 @@ export function PostsList({ posts }) {
         <Post
           content={post.content}
           createdDatetime={post.created_datetime}
-          handleDeleteClick={handleDeleteClick}
+          handleDeleteClick={() => handleDeleteClick(post)}
           handleEditClick={handleEditClick}
           key={`${post.id}_${index}}`}
           owner={isOwner(post.username)}
@@ -61,20 +73,12 @@ export function PostsList({ posts }) {
           isModalOpen={editModalOpen}
           setIsModalOpen={setEditModalOpen}
         >
-          <input
-            value={selectedCard.title}
-            onChange={(e) =>
-              setSelectedCard({ ...selectedCard, title: e.target.value })
-            }
+          <AddEdit
+            handleEditConfirm={handleEditConfirm}
+            handleEditCancel={handleEditCancel}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
           />
-          <textarea
-            value={selectedCard.content}
-            onChange={(e) =>
-              setSelectedCard({ ...selectedCard, content: e.target.value })
-            }
-          />
-          <button onClick={handleSaveClick}>Save</button>
-          <button onClick={() => setEditModalOpen(false)}>Cancel</button>
         </ModalComponent>
       )}
       {deleteModalOpen && (
@@ -82,9 +86,11 @@ export function PostsList({ posts }) {
           isModalOpen={deleteModalOpen}
           setIsModalOpen={setDeleteModalOpen}
         >
-          <p>Are you sure you want to delete this card?</p>
-          <button onClick={handleDeleteConfirm}>Delete</button>
-          <button onClick={handleDeleteCancel}>Cancel</button>
+          <DeleteNotification
+            handleDeleteConfirm={handleDeleteConfirm}
+            handleDeleteCancel={handleDeleteCancel}
+            selectedCard={selectedCard}
+          />
         </ModalComponent>
       )}
     </>

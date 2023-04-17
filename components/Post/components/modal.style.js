@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 
 export const Modal = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  backdrop-filter: blur(4px);
   background-color: white;
-  z-index: 100;
+  border: 1px solid #999999;
   border-radius: 8px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  backdrop-filter: blur(4px);
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
 `;
 
 export const BlurredBackground = styled.div`

@@ -5,11 +5,9 @@ export const api = (type = 'user') => {
     user: import.meta.env.VITE_APP_BASE_URL_API,
   };
 
-
   const API = axios.create({
-    baseURL: paths[type]
+    baseURL: paths[type],
   });
-
 
   API.interceptors.response.use(undefined, (err) => {
     const {
@@ -29,23 +27,31 @@ export const api = (type = 'user') => {
 export const get = async (config) => {
   const { type, service, queryString } = config;
   if (queryString) {
-    return api(type).get(`${service}?${queryString}`).then(response => response.data);
+    return api(type)
+      .get(`${service}?${queryString}`)
+      .then((response) => response.data);
   }
 
-  return api(type).get(`${service}`).then(response => response.data);
+  return api(type)
+    .get(`${service}`)
+    .then((response) => response.data);
 };
 
-export const put = (config) => {
+export const put = async (config) => {
   const { type, service, data } = config;
-  return api(type).put(service, data).then(response => response.data);
+  return api(type)
+    .put(service, data)
+    .then((response) => response.data);
 };
 
-export const post = (config) => {
+export const post = async (config) => {
   const { type, service, data } = config;
-  return api(type).post(service, data).then(response => response.data);
+  return api(type)
+    .post(service, data)
+    .then((response) => response.data);
 };
 
-export const remove = (config) => {
+export const remove = async (config) => {
   const { type, service } = config;
   return api(type).delete(service);
 };
