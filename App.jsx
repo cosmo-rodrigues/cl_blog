@@ -44,11 +44,11 @@ function App() {
       </Header>
       <Content>
         <Routes>
-          <Route path='/' element={<Home />}>
+          <Route exact path='/' element={<Home />}>
             <Route path=':usermame' element={<></>} />
           </Route>
-          <Route path='login' element={<Login />} />
-          <Route path='*' element={<Navigate replace to='/' />} />
+          <Route path='/*' element={<Navigate to='/' />} />
+          <Route exact path='login' element={<Login />} />
         </Routes>
       </Content>
     </Container>
