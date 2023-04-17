@@ -5,5 +5,4 @@ export const Container = styled.div`
     border: 1px solid ${({ theme }) => theme.COLORS.GRAY_MD};
     border-radius: 16px;
     padding: 24px;
-    position: relative;
 `;

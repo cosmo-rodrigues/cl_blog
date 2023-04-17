@@ -7,10 +7,24 @@ export const Modal = styled.div`
   border-radius: 8px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   left: 50%;
-  position: fixed;
+  position: relative;
   top: 50%;
   transform: translate(-50%, -50%);
+  height: 334px;
   z-index: 100;
+  width: 630px;
+
+  margin-left: 0 auto;
+
+  @media (max-width: 1023px) {
+    left: 45%;
+    width: 80%;
+  }
+
+  @media (max-width: 767px) {
+    left: 43%;
+    width: 80%;
+  }
 `;
 
 export const BlurredBackground = styled.div`

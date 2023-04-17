@@ -1,18 +1,19 @@
-import { get, post, put, remove } from './api';
+import { get, post, patch, remove } from './api';
 
-const getById = async (id) => get({ type: 'user', service: `careers/${id}/` });
+const getById = async (id) =>
+  await get({ type: 'user', service: `careers/${id}/` });
 
 const getAll = async (queryString) =>
-  get({ type: 'user', service: `careers/`, queryString });
+  await get({ type: 'user', service: `careers/`, queryString });
 
 const create = async (data) =>
-  post({ type: 'user', service: `careers/`, data });
+  await post({ type: 'user', service: `careers/`, data });
 
-const update = async (id, data) =>
-  put({ type: 'user', service: `careers/${id}/`, data });
+const update = async (data) =>
+  await patch({ type: 'user', service: `careers/${data.id}/`, data });
 
 const deletePost = async (id) =>
-  remove({ type: 'user', service: `careers/${id}/` });
+  await remove({ type: 'user', service: `careers/${id}/` });
 
 export const postService = {
   getById,

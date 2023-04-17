@@ -7,4 +7,7 @@ export const store = configureStore({
     posts,
     users,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  })
 });

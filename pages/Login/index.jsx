@@ -5,9 +5,15 @@ import { Helmet } from 'react-helmet';
 import { loginService } from '../../services/login';
 import { fetchPosts } from '../../actions/posts';
 
-import { Input, RowRight, SubTitle, Title } from '../../style/globalStyles';
+import { RowRight, SubTitle, Title } from '../../style/globalStyles';
 import Button from '../../components/Button';
-import { List, Modal } from './styles';
+import {
+  ErrorMessage,
+  InputContainer,
+  InputField,
+  List,
+  Modal,
+} from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
@@ -49,6 +55,15 @@ export default function Login() {
     }
   }
 
+  function validateUserName() {
+    const valide = userName.length >= 3;
+    if (valide) return { isValid: true, message: '' };
+    return {
+      isValid: false,
+      message: 'Username must be at least 3 characters',
+    };
+  }
+
   return (
     <Modal>
       <Helmet>
@@ -57,17 +72,21 @@ export default function Login() {
       <Title>Welcome to CodeLeap network!</Title>
       <SubTitle>Please enter your username</SubTitle>
 
-      <Input
-        placeholder='Jhon doe'
-        type='email'
-        value={userName}
-        onChange={(event) => setUserName(event.target.value)}
-      />
+      <InputContainer>
+        <InputField
+          value={userName}
+          isValid={validateUserName().isValid}
+          onChange={(event) => setUserName(event.target.value)}
+        />
+        {!validateUserName().isValid && (
+          <ErrorMessage>{validateUserName().message}</ErrorMessage>
+        )}
+      </InputContainer>
 
       <RowRight>
         <Button
           title='Enter'
-          color={!userName || userName.length < 3 ? 'disabled' : 'blue'}
+          color={validateUserName().isValid ? 'blue' : 'disabled'}
           onClick={Login}
         />
       </RowRight>

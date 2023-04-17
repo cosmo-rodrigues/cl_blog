@@ -3,15 +3,14 @@ import { Post } from './components/post';
 import { ModalComponent } from './components/modal';
 import { loginService } from '../../services/login';
 import { DeleteNotification } from './components/delete.notification';
-import { AddEdit } from './components/add.edit';
+import { EditPost } from './components/edit';
 import { useDispatch } from 'react-redux';
-import { deletePost, fetchPosts } from '../../actions/posts';
+import * as postsActions from '../../actions/posts';
 
 export function PostsList({ posts }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({
-    username: '',
+  const [selectedPost, setSelectedPost] = useState({
     title: '',
     content: '',
   });
@@ -20,39 +19,51 @@ export function PostsList({ posts }) {
 
   const user = loginService.isLogged();
 
-  function handleEditClick(card) {
-    setSelectedCard(card);
+  const handleEditClick = (post) => {
+    setSelectedPost(post);
     setEditModalOpen(true);
-  }
+  };
 
-  function handleEditConfirm() {
-    // Save changes to the selected card
+  const handleEditConfirm = async (post) => {
+    try {
+      dispatch(postsActions.updatePost(post));
+      setSelectedPost({ title: '', content: '' });
+      dispatch(postsActions.fetchPosts({ limit: 10, offset: 0, reset: true }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setEditModalOpen(false);
+    }
+  };
+
+  const handleEditCancel = () => {
     setEditModalOpen(false);
-  }
+  };
 
-  function handleEditCancel() {
-    // Save changes to the selected card
-    setEditModalOpen(false);
-  }
-
-  function handleDeleteClick(card) {
-    setSelectedCard(card);
+  const handleDeleteClick = (post) => {
+    setSelectedPost(post);
     setDeleteModalOpen(true);
-  }
+  };
 
-  async function handleDeleteConfirm(id) {
-    dispatch(deletePost(id));
-    dispatch(fetchPosts({ limit: 10, offset: 0, reset: true }));
+  const handleDeleteConfirm = async (id) => {
+    try {
+      dispatch(postsActions.deletePost(id));
+      setSelectedPost({ title: '', content: '' });
+      dispatch(postsActions.fetchPosts({ limit: 10, offset: 0, reset: true }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDeleteModalOpen(false);
+    }
+  };
+
+  const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
-  }
+  };
 
-  function handleDeleteCancel() {
-    setDeleteModalOpen(false);
-  }
-
-  function isOwner(username) {
+  const isOwner = (username) => {
     return user && user.username === username;
-  }
+  };
 
   return (
     <>
@@ -61,7 +72,7 @@ export function PostsList({ posts }) {
           content={post.content}
           createdDatetime={post.created_datetime}
           handleDeleteClick={() => handleDeleteClick(post)}
-          handleEditClick={handleEditClick}
+          handleEditClick={() => handleEditClick(post)}
           key={`${post.id}_${index}}`}
           owner={isOwner(post.username)}
           title={post.title}
@@ -69,27 +80,21 @@ export function PostsList({ posts }) {
         />
       ))}
       {editModalOpen && (
-        <ModalComponent
-          isModalOpen={editModalOpen}
-          setIsModalOpen={setEditModalOpen}
-        >
-          <AddEdit
+        <ModalComponent isModalOpen={editModalOpen}>
+          <EditPost
             handleEditConfirm={handleEditConfirm}
             handleEditCancel={handleEditCancel}
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
+            setSelectedPost={setSelectedPost}
+            selectedPost={selectedPost}
           />
         </ModalComponent>
       )}
       {deleteModalOpen && (
-        <ModalComponent
-          isModalOpen={deleteModalOpen}
-          setIsModalOpen={setDeleteModalOpen}
-        >
+        <ModalComponent isModalOpen={deleteModalOpen}>
           <DeleteNotification
             handleDeleteConfirm={handleDeleteConfirm}
             handleDeleteCancel={handleDeleteCancel}
-            selectedCard={selectedCard}
+            selectedPost={selectedPost}
           />
         </ModalComponent>
       )}

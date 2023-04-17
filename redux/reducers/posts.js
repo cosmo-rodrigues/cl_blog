@@ -16,7 +16,7 @@ export const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       const shouldReset = action.payload.reset
-        ? [...action.payload.results]
+        ? action.payload.results
         : [...state.posts, ...action.payload.results];
       state.status = 'succeeded';
       state.posts = shouldReset;

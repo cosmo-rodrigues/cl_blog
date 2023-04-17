@@ -37,10 +37,10 @@ export const get = async (config) => {
     .then((response) => response.data);
 };
 
-export const put = async (config) => {
+export const patch = async (config) => {
   const { type, service, data } = config;
   return api(type)
-    .put(service, data)
+    .patch(service, data)
     .then((response) => response.data);
 };
 

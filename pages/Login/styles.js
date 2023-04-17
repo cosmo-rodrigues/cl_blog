@@ -33,9 +33,48 @@ export const List = styled.ul`
   color: green;
   display: flex;
   flex-direction: column;
-  
+
   li {
     max-width: 50%;
     word-wrap: break-word;
   }
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+`;
+
+export const InputLabel = styled.label`
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+`;
+
+export const InputField = styled.input`
+  width: 100%;
+  height: 32px;
+  margin-bottom: 16px;
+
+  border: 1px solid
+    ${({ theme, isValid }) =>
+      isValid ? theme.COLORS.GRAY_DARK : theme.COLORS.RED};
+  border-radius: 8px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: ${({ theme }) => theme.FONT_SIZE.SM};
+  line-height: 16px;
+  text-indent: 11.2px;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.COLORS.GRAY};
+  }
+  padding: 0.5rem;
+`;
+
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
 `;

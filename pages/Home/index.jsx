@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { fetchPosts } from '../../actions/posts';
 import SearchBar from '../../components/Search';
-import AddEditPost from '../../components/AddEditPost';
+import { AddPost } from '../../components/AddPost';
 import { PostsList } from '../../components/Post';
 import { Container, Header, Content } from './styles';
 export default function Home() {
@@ -17,11 +17,13 @@ export default function Home() {
     dispatch(fetchPosts({ limit: 10, offset: 0 }));
   }, []);
 
-  async function handleLoadMore() {
-    if (next) {
-      dispatch(fetchPosts({ next }));
-    }
+  async function handleLoadMore(next) {
+    dispatch(fetchPosts({ next }));
   }
+
+  useEffect(() => {
+    if (next) handleLoadMore();
+  }, [next]);
 
   return (
     <>
@@ -35,7 +37,7 @@ export default function Home() {
         </Header>
 
         <Content>
-          <AddEditPost />
+          <AddPost />
 
           {posts.length > 0 ? (
             <PostsList posts={posts} />

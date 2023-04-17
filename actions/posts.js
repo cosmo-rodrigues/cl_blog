@@ -24,3 +24,11 @@ export const fetchPostsByUserName = createAsyncThunk(
 export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
   return postService.deletePost(id);
 });
+
+export const createPost = createAsyncThunk('posts/createPost', async (post) => {
+  return postService.create(post);
+});
+
+export const updatePost = createAsyncThunk('posts/updatePost', async (post) => {
+  return postService.update(post);
+});

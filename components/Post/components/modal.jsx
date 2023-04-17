@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { BlurredBackground, Modal } from './modal.style';
 
-export function ModalComponent({ children, isModalOpen, setIsModalOpen }) {
+export function ModalComponent({ children, isModalOpen}) {
   return (
-    <div>
-      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
+    <>
       {isModalOpen && (
-        <>
-          <BlurredBackground />
-          <Modal onClick={() => setIsModalOpen(false)}>{children}</Modal>
-        </>
+          <BlurredBackground>
+            <Modal>{children}</Modal>
+          </BlurredBackground>
       )}
-    </div>
+    </>
   );
 }

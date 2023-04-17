@@ -10,14 +10,14 @@ import {
 export function DeleteNotification({
   handleDeleteConfirm,
   handleDeleteCancel,
-  selectedCard,
+  selectedPost,
 }) {
   return (
     <Container>
       <Text>Are you sure you want to delete this card?</Text>
       <ButtonsContainer>
         <ButtonCancel onClick={handleDeleteCancel}>Cancel</ButtonCancel>
-        <ButtonDelete onClick={() => handleDeleteConfirm(selectedCard.id)}>
+        <ButtonDelete onClick={() => handleDeleteConfirm(selectedPost.id)}>
           Delete
         </ButtonDelete>
       </ButtonsContainer>
