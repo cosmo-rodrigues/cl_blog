@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Post } from './components/post';
 import { ModalComponent } from './components/modal';
+import { loginService } from '../../services/login';
 
-export function PostsList({ posts, owner }) {
+export function PostsList({ posts }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({
@@ -10,6 +11,8 @@ export function PostsList({ posts, owner }) {
     title: '',
     content: '',
   });
+
+  const user = loginService.isLogged();
 
   const handleEditClick = (card) => {
     setSelectedCard(card);
@@ -35,16 +38,20 @@ export function PostsList({ posts, owner }) {
     setDeleteModalOpen(false);
   };
 
+  function isOwner(username) {
+    return user && user.username === username;
+  }
+
   return (
     <>
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <Post
           content={post.content}
           createdDatetime={post.created_datetime}
           handleDeleteClick={handleDeleteClick}
           handleEditClick={handleEditClick}
-          key={post.id}
-          owner={owner}
+          key={`${post.id}_${index}}`}
+          owner={isOwner(post.username)}
           title={post.title}
           userName={post.username}
         />

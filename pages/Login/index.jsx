@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import { loginService } from '../../services/login';
-import { fetchPosts } from '../../redux/reducers/posts';
+import { fetchPosts } from '../../actions/posts';
 
 import { Input, RowRight, SubTitle, Title } from '../../style/globalStyles';
 import Button from '../../components/Button';

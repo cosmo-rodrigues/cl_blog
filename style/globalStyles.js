@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-export const AnchorStyle = {
-  color: 'white',
-  textDecoration: 'none',
-  margin: '10px',
-  fontSize: '25px',
-};
+export const AnchorStyle = styled.a`
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  margin: 10px;
+  text-decoration: none;
+`;
 
 export const Container = styled.div`
   .c-green {

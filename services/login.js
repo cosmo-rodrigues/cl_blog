@@ -23,9 +23,15 @@ const singUp = (username) => {
   return { status: 'success', message: 'User created successfully!' };
 };
 
+const isLogged = () => {
+  const user = getUser();
+  if(user) return user
+  return false;
+}
+
 export const loginService = {
   login,
   logOut,
   singUp,
-  getUser,
+  isLogged,
 };

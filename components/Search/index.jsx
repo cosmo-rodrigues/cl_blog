@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Search, SearchTerm, SearchButton } from './style';
-import { fetchPosts, fetchPostsByUserName } from '../../redux/reducers/posts';
+import { fetchPosts, fetchPostsByUserName } from '../../actions/posts';
 import { useDispatch } from 'react-redux';
 
 function SearchBar() {
@@ -25,7 +25,7 @@ function SearchBar() {
         setSearchTerm('');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setToggle(!toggle);
     }

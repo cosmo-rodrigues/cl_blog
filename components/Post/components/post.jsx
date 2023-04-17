@@ -38,7 +38,7 @@ export function Post({
       <Header>
         <Title>{title}</Title>
 
-        <Icons className={owner === userName ? '' : 'display-none'}>
+        <Icons className={owner ? '' : 'display-none'}>
           <img src={IconDelete} alt='' onClick={handleDeleteClick} />
           <img src={IconEdit} alt='' onClick={handleEditClick} />
         </Icons>
