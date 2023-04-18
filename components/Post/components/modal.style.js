@@ -10,7 +10,7 @@ export const Modal = styled.div`
   position: relative;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 334px;
+  height: ${({ higher }) => (higher ? '334px' : '146px')};
   z-index: 100;
   width: 630px;
 

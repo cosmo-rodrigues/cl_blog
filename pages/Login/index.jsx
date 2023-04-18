@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { loginService } from '../../services/login';
 import { fetchPosts } from '../../actions/posts';
 
-import { RowRight, SubTitle, Title } from '../../style/globalStyles';
+import { RowRight, SubTitle } from '../../style/globalStyles';
 import Button from '../../components/Button';
 import {
   ErrorMessage,
@@ -13,6 +13,7 @@ import {
   InputField,
   List,
   Modal,
+  Title,
 } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Modal = styled.div`
-  width: 500px;
+  max-width: 660px;
   background: ${({ theme }) => theme.COLORS.WHITE};
   border: 1px solid ${({ theme }) => theme.COLORS.GRAY};
   border-radius: 16px;
@@ -11,6 +11,7 @@ export const Modal = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  margin: 0 auto;
 
   a {
     text-decoration: none;
@@ -25,6 +26,11 @@ export const Modal = styled.div`
 
   a .disabled {
     background: ${({ theme }) => theme.COLORS.GRAY};
+  }
+
+  @media (max-width: 768px) {
+    padding: 10% 30%;
+    width: 100%;
   }
 `;
 
@@ -44,6 +50,7 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 90%;
 `;
 
 export const InputLabel = styled.label`
@@ -52,9 +59,9 @@ export const InputLabel = styled.label`
 `;
 
 export const InputField = styled.input`
-  width: 100%;
   height: 32px;
   margin-bottom: 16px;
+  width: 100%;
 
   border: 1px solid
     ${({ theme, isValid }) =>
@@ -77,4 +84,10 @@ export const ErrorMessage = styled.span`
   color: red;
   font-size: 0.8rem;
   margin-top: 0.5rem;
+`;
+
+export const Title = styled.h1`
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
 `;

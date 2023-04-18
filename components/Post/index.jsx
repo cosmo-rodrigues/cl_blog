@@ -80,7 +80,7 @@ export function PostsList({ posts }) {
         />
       ))}
       {editModalOpen && (
-        <ModalComponent isModalOpen={editModalOpen}>
+        <ModalComponent isModalOpen={editModalOpen} higher={true}>
           <EditPost
             handleEditConfirm={handleEditConfirm}
             handleEditCancel={handleEditCancel}
@@ -90,7 +90,7 @@ export function PostsList({ posts }) {
         </ModalComponent>
       )}
       {deleteModalOpen && (
-        <ModalComponent isModalOpen={deleteModalOpen}>
+        <ModalComponent isModalOpen={deleteModalOpen} higher={false}>
           <DeleteNotification
             handleDeleteConfirm={handleDeleteConfirm}
             handleDeleteCancel={handleDeleteCancel}
