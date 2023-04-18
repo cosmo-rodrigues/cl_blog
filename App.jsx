@@ -1,4 +1,5 @@
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import {
@@ -10,6 +11,7 @@ import {
 } from './style/globalStyles';
 import { loginService } from './services/login';
 function App() {
+  const history = createBrowserHistory({ window });
   const navigate = useNavigate();
   const user = loginService.isLogged();
 
@@ -43,7 +45,7 @@ function App() {
         </Navbar>
       </Header>
       <Content>
-        <Routes>
+        <Routes history={history}>
           <Route path='/' element={<Home />}>
             <Route path=':usermame' element={<></>} />
           </Route>
